@@ -487,7 +487,7 @@ export const App = () => {
               <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
                 <div
                   className={`bg-amber-500 h-3 rounded-full transition-all duration-1000 ease-out`}
-                  {% comment %} 
+{% comment %} 
     The loop below iterates over your skill data (e.g., in _data/skills.yml).
     Replace 'site.data.skills' with your actual data source if different.
 {% endcomment %}
@@ -500,16 +500,16 @@ export const App = () => {
     </div>
     <div class="w-full bg-gray-200 rounded-full h-2.5">
         <!-- 
-            THIS IS THE CRITICAL FIX: 
-            Using {% if/else %} instead of JavaScript ternary operator.
-            I'm assuming the visibility variable is defined in the page front matter.
+            FIXED LOGIC: Using {% if/else %} and closed correctly with {% endif %}.
+            The error 'use endif' suggests a misplaced {% endfor %} elsewhere in your file.
         -->
         <div class="h-2.5 rounded-full bg-blue-600 transition-all duration-700 ease-in-out" 
              style="width: {% if page.isSkillsVisible %}{{ skill.level }}%{% else %}0%{% endif %};">
         </div>
     </div>
 </div>
-{% endfor %}
+{% endfor %} 
+<!-- This {% endfor %} closes the {% for skill in site.data.skills %} loop. -->
 
                   aria-valuenow={skill.level}
                   aria-valuemin="0"
