@@ -487,7 +487,30 @@ export const App = () => {
               <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
                 <div
                   className={`bg-amber-500 h-3 rounded-full transition-all duration-1000 ease-out`}
-                  style={{ width: isSkillsVisible ? `${skill.level}%` : '0%' }}
+                  {% comment %} 
+    The loop below iterates over your skill data (e.g., in _data/skills.yml).
+    Replace 'site.data.skills' with your actual data source if different.
+{% endcomment %}
+
+{% for skill in site.data.skills %}
+<div class="my-4">
+    <div class="flex justify-between items-center mb-1">
+        <span class="text-sm font-semibold text-gray-700">{{ skill.name }}</span>
+        <span class="text-xs text-gray-500">{{ skill.level }}%</span>
+    </div>
+    <div class="w-full bg-gray-200 rounded-full h-2.5">
+        <!-- 
+            THIS IS THE CRITICAL FIX: 
+            Using {% if/else %} instead of JavaScript ternary operator.
+            I'm assuming the visibility variable is defined in the page front matter.
+        -->
+        <div class="h-2.5 rounded-full bg-blue-600 transition-all duration-700 ease-in-out" 
+             style="width: {% if page.isSkillsVisible %}{{ skill.level }}%{% else %}0%{% endif %};">
+        </div>
+    </div>
+</div>
+{% endfor %}
+
                   aria-valuenow={skill.level}
                   aria-valuemin="0"
                   aria-valuemax="100"
